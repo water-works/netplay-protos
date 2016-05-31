@@ -88,20 +88,22 @@ message PlugControllerResponsePB {
   // End key fields
 
   // Enum describing the success or failure reasons.
-  // Next ID: 6
+  // Next ID: 7
   enum Status {
     UNKNOWN = 0;
     SUCCESS = 1;
-    // Catchall for unknown or unspecified failure reasons.
-    UNSPECIFIED_FAILURE = 2;
     // The specified MD5 hash does not match the game's hash.
-    ROM_MD5_MISMATCH = 3;
+    ROM_MD5_MISMATCH = 2;
     // No ports were requested.
-    NO_PORTS_REQUESTED = 4;
+    NO_PORTS_REQUESTED = 3;
     // The request failed because the requested port configuration could not be
     // satisfied. See rejection_reasons below for details on why the request was
     // rejected.
-    PORT_REQUEST_REJECTED = 5;
+    PORT_REQUEST_REJECTED = 4;
+    // Requested to join a non-existent or closed console.
+    NO_SUCH_CONSOLE = 5;
+    // Catchall for unknown or unspecified failure reasons.
+    UNSPECIFIED_FAILURE = 6;
   }
   Status status = 2;
 
@@ -157,10 +159,13 @@ message StartGameResponsePB {
   // End key fields
 
   // Enum describing the success or failure reasons.
+  // Next ID: 5
   enum Status {
     UNKNOWN = 0;
     SUCCESS = 1;
-    UNSPECIFIED_FAILURE = 2;
+    NO_SUCH_CONSOLE = 2;
+    CLIENTS_NOT_READY = 3;
+    UNSPECIFIED_FAILURE = 4;
   }
   Status status = 2;
 
