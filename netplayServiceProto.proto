@@ -244,6 +244,33 @@ message KeyStatePB {
   int32 y_axis        = 21;
 }
 
+// Message to notify clients that the console will stopped and deleted. Once
+// this message is sent, all subsequent messages received may be answered with
+// an invalid data event.
+//
+// Note this message indicates both that a running console is about to be
+// stopped and also that an unstarted console is about to be deleted and any
+// clients waiting for it to start should stop waiting.
+//
+// Next ID: 3
+message StopConsolePB {
+  // Key fields
+  int64 console_id = 1;
+  // End key fields
+
+  // Describes why the console was stopped.
+  // Next ID: 3
+  enum Reason {
+    UNKNOWN = 0;
+    // The server encountered an error and terminated the console.
+    ERROR = 1;
+    // A client requested that the console be stopped.
+    STOP_REQUESTED_BY_CLIENT = 2;
+  }
+
+  Reason stop_reason = 2;
+}
+
 // Next ID: 6
 message InvalidDataPB {
   // Key fields
