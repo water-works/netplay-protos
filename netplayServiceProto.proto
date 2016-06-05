@@ -300,8 +300,9 @@ message OutgoingEventPB {
 // Next ID: 4
 message IncomingEventPB {
   StartGamePB start_game = 1;
-  repeated KeyStatePB key_press = 2;
-  repeated InvalidDataPB invalid_data = 3;
+  StopConsolePB stop_console = 2;
+  repeated KeyStatePB key_press = 3;
+  repeated InvalidDataPB invalid_data = 4;
 }
 
 // -----------------------------------------------------------------------------
