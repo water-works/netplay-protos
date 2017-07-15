@@ -46,6 +46,55 @@ message MakeConsoleResponsePB {
 }
 
 // -----------------------------------------------------------------------------
+// QueryConsole
+//
+// Retrieve information about a specific console.
+
+message QueryConsoleRequestPB {
+  // Key fields
+  // Unique console ID
+  int64 console_id = 1;
+}
+
+message QueryConsoleResponsePB {
+  enum Status {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    // Requested console does not exist.
+    NO_SUCH_CONSOLE = 2;
+    // Catchall for unknown or unspecified failure reasons.
+    UNSPECIFIED_FAILURE = 3;
+  }
+  
+  enum ConsoleStatus {
+    UNKNOWN = 0;
+    CREATED = 1;
+    PLAYING = 2;
+    SHUTDOWN = 3;
+  }
+  
+  Status status = 1;
+  
+  ConsoleStatus console_status = 2;
+  
+  bool port_1_occupied = 3;
+  int32 port_1_delay_frames = 4;
+  
+  bool port_2_occupied = 5;
+  int32 port_2_delay_frames = 6;
+  
+  bool port_3_occupied = 7;
+  int32 port_3_delay_frames = 8;
+  
+  bool port_4_occupied = 9;
+  int32 port_4_delay_frames = 10;
+  
+  // MD5 of running hash. Used to ensure consistency between clients.
+  bytes rom_file_md5 = 11;
+}
+
+
+// -----------------------------------------------------------------------------
 // PlugController
 //
 // Request one or more ports on a virtual console.
@@ -329,6 +378,10 @@ service NetPlayServerService {
   // Request a new console from the server.
   rpc MakeConsole (MakeConsoleRequestPB)
     returns (MakeConsoleResponsePB) {}
+
+  // Query a console to retrieve it's current status.
+  rpc QueryConsole (QueryConsoleRequestPB)
+    returns (QueryConsoleResponsePB) {}
 
   // Plug a controller into an initialized virtual console. Can request a
   // specific port or request an arbitrary port. No more than 4 players may be
