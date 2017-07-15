@@ -58,7 +58,7 @@ message QueryConsoleRequestPB {
 
 message QueryConsoleResponsePB {
   enum Status {
-    UNKNOWN = 0;
+    UNKNOWN_STATUS = 0;
     SUCCESS = 1;
     // Requested console does not exist.
     NO_SUCH_CONSOLE = 2;
@@ -67,7 +67,7 @@ message QueryConsoleResponsePB {
   }
   
   enum ConsoleStatus {
-    UNKNOWN = 0;
+    UNKNOWN_CONSOLE_STATUS = 0;
     CREATED = 1;
     PLAYING = 2;
     SHUTDOWN = 3;
